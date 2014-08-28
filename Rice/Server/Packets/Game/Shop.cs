@@ -15,7 +15,21 @@ namespace Rice.Server.Packets.Game
             // 0 = ItemID
             // 1 = Unknown
             // 2 = Quantity
-            Log.WriteLine("{0} {1} {2}", packet.Reader.ReadInt16(), packet.Reader.ReadInt16(), packet.Reader.ReadInt16());
+            int itemID = packet.Reader.ReadInt16();
+            int unknown = packet.Reader.ReadInt16();
+            int quantity = packet.Reader.ReadInt16();
+
+            Log.WriteLine("{0} {1} {2}", itemID, unknown, quantity);
+
+
+            // 0 = itemID
+            // 1 = Price
+            // 2 = Quantity
+            var ack = new RicePacket(406);
+            ack.Writer.Write(itemID);
+            ack.Writer.Write(17500);
+            ack.Writer.Write(quantity);
+            packet.Sender.Send(ack);
         }
     }
 }
